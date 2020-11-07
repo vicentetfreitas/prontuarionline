@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.vicente.apiprontuarionline.model.Address;
+import com.vicente.apiprontuarionline.model.Contact;
 import com.vicente.apiprontuarionline.model.Patient;
 import com.vicente.apiprontuarionline.repositories.AddressRepository;
+import com.vicente.apiprontuarionline.repositories.ContactRepository;
 import com.vicente.apiprontuarionline.repositories.PatientRepository;
 
 @SpringBootApplication
@@ -25,6 +27,8 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 	PatientRepository patientRepository;
 	@Autowired
 	AddressRepository addressRepository;
+	@Autowired
+	ContactRepository contactRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -46,7 +50,6 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		pct2.setGenre("Feminino");
 		pct2.setDateOfBirth(sdf.parse("05/06/1985"));
 
-		
 		// ENDEREÇOS
 		// ENDEREÇO 1
 		Address end1 = new Address();
@@ -91,10 +94,23 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		end1.getPatients().addAll(Arrays.asList(pct1));
 		end2.getPatients().addAll(Arrays.asList(pct2));
 		end3.getPatients().addAll(Arrays.asList(pct1));
-		
+
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 		addressRepository.saveAll(Arrays.asList(end1, end2, end3));
 
+		// CONTATO
+		Contact cnt1 = new Contact();
+		cnt1.getPhones().addAll(Arrays.asList("(85) 3254-0910", "(85) 3255-0911"));
+		cnt1.getEmails().addAll(Arrays.asList("antonio@gmail.com", "antoniojose@yahoo.com"));
+		cnt1.getContactNumbers().addAll(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
+
+		Contact cnt2 = new Contact();
+		cnt2.getPhones().addAll(Arrays.asList("(85) 3274-2516", "(85) 3344-0907"));
+		cnt2.getEmails().addAll(Arrays.asList("maria@gmail.com", "mariamontenegro@outlook.com"));
+		cnt2.getContactNumbers().addAll(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
+		
+		patientRepository.saveAll(Arrays.asList(pct1,pct2));
+		contactRepository.saveAll(Arrays.asList(cnt1,cnt2));
 	}
 
 }

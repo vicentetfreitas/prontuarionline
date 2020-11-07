@@ -36,17 +36,18 @@ public class Patient implements Serializable {
 	private Long id;
 
 	private String firstName;
-
 	private String fullSurname;
-
 	private String genre;
 	private Date dateOfBirth;
 
 	// ASSOCIAÇÕES E RELACIONAMENTOS
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_patient_address", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "adress_id"))
-
+	@JoinTable(name = "tb_patient_address", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
 	private List<Address> adresses = new ArrayList<>();
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_patient_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
+	private List<Contact> contacts = new ArrayList<>();
 
 	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth) {
 		super();
