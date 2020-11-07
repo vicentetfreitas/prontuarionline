@@ -13,11 +13,13 @@ import com.vicente.apiprontuarionline.model.Contact;
 import com.vicente.apiprontuarionline.model.EmergencyContact;
 import com.vicente.apiprontuarionline.model.IdentificationDocument;
 import com.vicente.apiprontuarionline.model.Patient;
+import com.vicente.apiprontuarionline.model.PatientAnamnesis;
 import com.vicente.apiprontuarionline.model.PatientPhysicalState;
 import com.vicente.apiprontuarionline.repositories.AddressRepository;
 import com.vicente.apiprontuarionline.repositories.ContactRepository;
 import com.vicente.apiprontuarionline.repositories.EmergencyContactRepository;
 import com.vicente.apiprontuarionline.repositories.IdentificationDocumentRepository;
+import com.vicente.apiprontuarionline.repositories.PatientAnamnesisRepository;
 import com.vicente.apiprontuarionline.repositories.PatientPhysicalStateRepository;
 import com.vicente.apiprontuarionline.repositories.PatientRepository;
 
@@ -40,6 +42,8 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 	EmergencyContactRepository emergencyContactRepository;
 	@Autowired
 	PatientPhysicalStateRepository patientPhysicalStateRepository;
+	@Autowired
+	PatientAnamnesisRepository patientAnamnesisRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -62,7 +66,7 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		pct2.setDateOfBirth(sdf.parse("05/06/1985"));
 
 		// ENDEREÇOS
-		// ENDEREÇO 1
+		// PACIENTE 1
 		Address add1 = new Address();
 		add1.setStreet("Rua das Cerejeiras");
 		add1.setNumber("1516");
@@ -74,7 +78,7 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		add1.setCountry("Brasil");
 		add1.setPostalCode("60.761-671");
 
-		// ENDEREÇO 2
+		// PACIENTE 2
 		Address add2 = new Address();
 		add2.setStreet("Rua das Margaridas");
 		add2.setNumber("2121");
@@ -86,7 +90,7 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		add2.setCountry("Brasil");
 		add2.setPostalCode("60.606-975");
 
-		// ENDEREÇO 3
+		// PACIENTE 3
 		Address add3 = new Address();
 		add3.setStreet("Rua das Palmeiras");
 		add3.setNumber("3297");
@@ -98,7 +102,6 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		add3.setCountry("Brasil");
 		add3.setPostalCode("60.808-789");
 
-		// PACIENTE_ENDEREÇO @ManyToMany
 		pct1.getAdresses().addAll(Arrays.asList(add1, add3));
 		pct2.getAdresses().addAll(Arrays.asList(add2));
 
@@ -106,34 +109,35 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		add2.getPatients().addAll(Arrays.asList(pct2));
 		add3.getPatients().addAll(Arrays.asList(pct1));
 
+		// BD: @ManyToMany => PACIENTE_ENDEREÇO
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 		addressRepository.saveAll(Arrays.asList(add1, add2, add3));
 
-		// CONTATO 1
+		// CONTATOS
+		// PACIENTE 1
 		Contact cnt1 = new Contact();
-
 		cnt1.setPhones(Arrays.asList("(85) 3254-0910", "(85) 3255-0911"));
 		cnt1.setEmails(Arrays.asList("antonio@gmail.com", "antoniojose@yahoo.com"));
 		cnt1.setContactNumbers(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
 
-		// CONTATO 2
+		// PACIENTE 2
 		Contact cnt2 = new Contact();
 		cnt2.setPhones(Arrays.asList("(85) 3274-2516", "(85) 3344-0907"));
 		cnt2.setEmails(Arrays.asList("maria@gmail.com", "mariamontenegro@outlook.com"));
 		cnt2.setContactNumbers(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
 
-		// PACIENTE_CONTATO @ManyToMany
 		pct1.getContacts().addAll(Arrays.asList(cnt1));
 		pct2.getContacts().addAll(Arrays.asList(cnt2));
 
 		cnt1.getPatients().addAll(Arrays.asList(pct1));
 		cnt2.getPatients().addAll(Arrays.asList(pct2));
 
+		// BD: @ManyToMany => PACIENTE_CONTATO
 		contactRepository.saveAll(Arrays.asList(cnt1, cnt2));
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 
 		// CONTATOS DE EMERGÊNCIAS
-		// CONTATO DE EMERGÊNCIA 1
+		// PACIENTE 1
 		EmergencyContact emct1 = new EmergencyContact();
 		emct1.setFirstName("Carlos");
 		emct1.setFullSurname("Manuel Bruno Souza");
@@ -143,7 +147,7 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		emct1.setPhone("(85) 2861-4390");
 		emct1.setContactNumber("(85) 98997-5373");
 
-		// CONTATO DE EMERGÊNCIA 2
+		// PACIENTE 2
 		EmergencyContact emct2 = new EmergencyContact();
 		emct2.setFirstName("Eduardo");
 		emct2.setFullSurname("Carlos Eduardo Henry Ferreira");
@@ -153,22 +157,22 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		emct2.setPhone("(85) 3893-1904");
 		emct2.setContactNumber("(85) 98899-2082(85) 98899-2082");
 
-		// PACIENTE_CONTATO_EMERGENCIA @ManyToMany
 		pct1.getEmergencyContacts().addAll(Arrays.asList(emct1));
 		pct2.getEmergencyContacts().addAll(Arrays.asList(emct2));
 		emct1.getPatients().addAll(Arrays.asList(pct1));
 		emct2.getPatients().addAll(Arrays.asList(pct2));
 
+		// BD: @ManyToMany => PACIENTE_CONTATO_DE_EMERGENCIA
 		emergencyContactRepository.saveAll(Arrays.asList(emct1, emct2));
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 
 		// DOCUMENTOS DE IDENTIFICAÇÃO
-		// DOCUMENTO DE IDENTIFCAÇÃO 1
+		// PACIENTE 1
 		IdentificationDocument iddc1 = new IdentificationDocument();
 		iddc1.setRg("16.795.506-8");
 		iddc1.setCpf("818.774.980-68");
 
-		// DOCUMENTO DE IDENTIFICAÇÃO 2
+		// PACIENTE 2
 		IdentificationDocument iddc2 = new IdentificationDocument();
 		iddc2.setRg("33.328.380-6");
 		iddc2.setCpf("269.670.880-09");
@@ -179,18 +183,19 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		iddc1.setPatient(pct1);
 		iddc2.setPatient(pct2);
 
-		// PACIENTE_DOCUMENTO_DE_IDENTIFICAÇÃO @OneToOne
+		// BD: @OneToOne => PACIENTE_DOCUMENTO_DE_IDENTIFICAÇÃO
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 		identificationDocumentRepository.saveAll(Arrays.asList(iddc1, iddc2));
 
 		// ESTADO FISÍCO DO PACIENTE
-		// ESTADO FISÍCO DO PACIENTE 1
+		// PACIENTE 1
 		PatientPhysicalState pps1 = new PatientPhysicalState();
 		pps1.setHeight(1.80);
 		pps1.setWeight(99.60);
 		pps1.setAbdominalCircumference(0.75);
 		pps1.setImc(30.60);
 
+		// PACIENTE 2
 		PatientPhysicalState pps2 = new PatientPhysicalState();
 		pps2.setHeight(1.65);
 		pps2.setWeight(82.0);
@@ -202,11 +207,37 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 
 		pps1.setPatient(pct1);
 		pps2.setPatient(pct2);
-		
+
+		// BD: @OneToOne => PACIENTE_ESTADO_FISÍCO
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-		patientPhysicalStateRepository.saveAll(Arrays.asList(pps1,pps2));
+		patientPhysicalStateRepository.saveAll(Arrays.asList(pps1, pps2));
 
+		// EXAME DE ANAMNESIS DO PACIENTE
+		// PACIENTE 1
+		PatientAnamnesis pnm1 = new PatientAnamnesis();
+		pnm1.setAllergies(true);
+		pnm1.setConsumeAlcohol(false);
+		pnm1.setFollowDiet(false);
+		pnm1.setPerformsPhysicalActivity(true);
+		pnm1.setSmoker(false);
 
+		// PACIENTE 2
+		PatientAnamnesis pnm2 = new PatientAnamnesis();
+		pnm2.setAllergies(false);
+		pnm2.setConsumeAlcohol(true);
+		pnm2.setFollowDiet(true);
+		pnm2.setPerformsPhysicalActivity(false);
+		pnm2.setSmoker(true);
+
+		pct1.setPatientAnamnesis(pnm1);
+		pct2.setPatientAnamnesis(pnm2);
+
+		pnm1.setPatient(pct1);
+		pnm2.setPatient(pct2);
+
+		// BD: @OneToOne => PACIENTE_ANAMNESIS
+		patientRepository.saveAll(Arrays.asList(pct1, pct2));
+		patientAnamnesisRepository.saveAll(Arrays.asList(pnm1, pnm2));
 	}
 
 }

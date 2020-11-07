@@ -62,6 +62,10 @@ public class Patient implements Serializable {
 	@JoinColumn(name = "patient_physical_state_id", referencedColumnName = "id")
 	private PatientPhysicalState patientPhysicalState;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "patient_anamnesis_id", referencedColumnName = "id")
+	private PatientAnamnesis patientAnamnesis;
+
 	// CONTRUTORES
 	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth,
 			IdentificationDocument identificationDocument, PatientPhysicalState patientPhysicalState) {
