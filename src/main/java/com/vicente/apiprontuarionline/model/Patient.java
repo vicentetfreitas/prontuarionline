@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -49,6 +51,11 @@ public class Patient implements Serializable {
 	@JoinTable(name = "tb_patient_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
 	private List<Contact> contacts = new ArrayList<>();
 
+	@OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private IdentificationDocument identificationDocument;
+	
+	// CONTRUTORES
 	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth) {
 		super();
 		this.id = id;
