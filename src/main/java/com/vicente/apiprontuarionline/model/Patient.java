@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,20 +43,10 @@ public class Patient implements Serializable {
 	private Date dateOfBirth;
 
 	// ASSOCIAÇÕES E RELACIONAMENTOS
-	@ManyToMany
-	@JoinTable(name = "tb_patient_address", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_patient_address", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "adress_id"))
+
 	private List<Address> adresses = new ArrayList<>();
-	/*
-	 * @ManyToMany
-	 * 
-	 * @JoinTable(name = "tb_patient_contact", joinColumns = @JoinColumn(name =
-	 * "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id")) private
-	 * List<Contact> contacts = new ArrayList<>();
-	 * 
-	 * @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-	 * 
-	 * @PrimaryKeyJoinColumn private IdentificationDocument identificationDocument;
-	 */
 
 	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth) {
 		super();

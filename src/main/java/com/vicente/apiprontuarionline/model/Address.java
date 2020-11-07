@@ -34,6 +34,7 @@ public class Address implements Serializable {
 	private String city;
 	private String street;
 	private String number;
+	private String neighborhood;
 	private String complement;
 	private String postalCode;
 
@@ -41,8 +42,8 @@ public class Address implements Serializable {
 	private List<Patient> patients = new ArrayList<>();
 
 	// CONSTRUTORES
-	public Address(Long id, String country, String state, String city, String street, String number, String complement,
-			String postalCode) {
+	public Address(Long id, String country, String state, String city, String street, String number,
+			String neighborhood, String complement, String postalCode) {
 		super();
 		this.id = id;
 		this.country = country;
@@ -50,6 +51,7 @@ public class Address implements Serializable {
 		this.city = city;
 		this.street = street;
 		this.number = number;
+		this.neighborhood = neighborhood;
 		this.complement = complement;
 		this.postalCode = postalCode;
 	}
