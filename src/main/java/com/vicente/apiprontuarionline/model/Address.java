@@ -37,6 +37,7 @@ public class Address implements Serializable {
 	private String neighborhood;
 	private String complement;
 	private String postalCode;
+	// ASSOCIAÇÕES E RELACIONAMENTOS
 
 	@ManyToMany(mappedBy = "adresses")
 	private List<Patient> patients = new ArrayList<>();

@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -51,10 +50,14 @@ public class Patient implements Serializable {
 	@JoinTable(name = "tb_patient_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
 	private List<Contact> contacts = new ArrayList<>();
 
-	@OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_patient_emergency_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "emergency_contact_id"))
+	private List<EmergencyContact> emergencyContacts = new ArrayList<>();
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "identification_document_id", referencedColumnName = "id")
 	private IdentificationDocument identificationDocument;
-	
+
 	// CONTRUTORES
 	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth) {
 		super();
