@@ -13,10 +13,12 @@ import com.vicente.apiprontuarionline.model.Contact;
 import com.vicente.apiprontuarionline.model.EmergencyContact;
 import com.vicente.apiprontuarionline.model.IdentificationDocument;
 import com.vicente.apiprontuarionline.model.Patient;
+import com.vicente.apiprontuarionline.model.PatientPhysicalState;
 import com.vicente.apiprontuarionline.repositories.AddressRepository;
 import com.vicente.apiprontuarionline.repositories.ContactRepository;
 import com.vicente.apiprontuarionline.repositories.EmergencyContactRepository;
 import com.vicente.apiprontuarionline.repositories.IdentificationDocumentRepository;
+import com.vicente.apiprontuarionline.repositories.PatientPhysicalStateRepository;
 import com.vicente.apiprontuarionline.repositories.PatientRepository;
 
 @SpringBootApplication
@@ -36,6 +38,8 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 	IdentificationDocumentRepository identificationDocumentRepository;
 	@Autowired
 	EmergencyContactRepository emergencyContactRepository;
+	@Autowired
+	PatientPhysicalStateRepository patientPhysicalStateRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -164,20 +168,44 @@ public class ApiProntuarionlineApplication implements CommandLineRunner {
 		iddc1.setRg("16.795.506-8");
 		iddc1.setCpf("818.774.980-68");
 
-
 		// DOCUMENTO DE IDENTIFICAÇÃO 2
 		IdentificationDocument iddc2 = new IdentificationDocument();
 		iddc2.setRg("33.328.380-6");
 		iddc2.setCpf("269.670.880-09");
-		
+
 		pct1.setIdentificationDocument(iddc1);
 		pct2.setIdentificationDocument(iddc2);
-		
+
 		iddc1.setPatient(pct1);
 		iddc2.setPatient(pct2);
+
 		// PACIENTE_DOCUMENTO_DE_IDENTIFICAÇÃO @OneToOne
 		patientRepository.saveAll(Arrays.asList(pct1, pct2));
 		identificationDocumentRepository.saveAll(Arrays.asList(iddc1, iddc2));
+
+		// ESTADO FISÍCO DO PACIENTE
+		// ESTADO FISÍCO DO PACIENTE 1
+		PatientPhysicalState pps1 = new PatientPhysicalState();
+		pps1.setHeight(1.80);
+		pps1.setWeight(99.60);
+		pps1.setAbdominalCircumference(0.75);
+		pps1.setImc(30.60);
+
+		PatientPhysicalState pps2 = new PatientPhysicalState();
+		pps2.setHeight(1.65);
+		pps2.setWeight(82.0);
+		pps2.setAbdominalCircumference(0.63);
+		pps2.setImc(30.12);
+
+		pct1.setPatientPhysicalState(pps1);
+		pct2.setPatientPhysicalState(pps2);
+
+		pps1.setPatient(pct1);
+		pps2.setPatient(pct2);
+		
+		patientRepository.saveAll(Arrays.asList(pct1, pct2));
+		patientPhysicalStateRepository.saveAll(Arrays.asList(pps1,pps2));
+
 
 	}
 

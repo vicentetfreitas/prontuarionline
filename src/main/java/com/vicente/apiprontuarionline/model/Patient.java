@@ -58,14 +58,21 @@ public class Patient implements Serializable {
 	@JoinColumn(name = "identification_document_id", referencedColumnName = "id")
 	private IdentificationDocument identificationDocument;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "patient_physical_state_id", referencedColumnName = "id")
+	private PatientPhysicalState patientPhysicalState;
+
 	// CONTRUTORES
-	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth) {
+	public Patient(Long id, String firstName, String fullSurname, String genre, Date dateOfBirth,
+			IdentificationDocument identificationDocument, PatientPhysicalState patientPhysicalState) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.fullSurname = fullSurname;
 		this.genre = genre;
 		this.dateOfBirth = dateOfBirth;
+		this.identificationDocument = identificationDocument;
+		this.patientPhysicalState = patientPhysicalState;
 	}
 
 }
