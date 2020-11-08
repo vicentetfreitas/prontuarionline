@@ -8,236 +8,226 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.vicente.apiprontuarionline.model.Address;
-import com.vicente.apiprontuarionline.model.Contact;
-import com.vicente.apiprontuarionline.model.EmergencyContact;
-import com.vicente.apiprontuarionline.model.IdentificationDocument;
-import com.vicente.apiprontuarionline.model.Patient;
-import com.vicente.apiprontuarionline.model.PatientAnamnesis;
-import com.vicente.apiprontuarionline.model.PatientPhysicalState;
-import com.vicente.apiprontuarionline.repositories.AddressRepository;
-import com.vicente.apiprontuarionline.repositories.ContactRepository;
-import com.vicente.apiprontuarionline.repositories.EmergencyContactRepository;
-import com.vicente.apiprontuarionline.repositories.IdentificationDocumentRepository;
-import com.vicente.apiprontuarionline.repositories.PatientAnamnesisRepository;
-import com.vicente.apiprontuarionline.repositories.PatientPhysicalStateRepository;
-import com.vicente.apiprontuarionline.repositories.PatientRepository;
+import com.vicente.apiprontuarionline.model.Contato;
+import com.vicente.apiprontuarionline.model.ContatoEmergencia;
+import com.vicente.apiprontuarionline.model.DocumentoIdentificacao;
+import com.vicente.apiprontuarionline.model.Endereco;
+import com.vicente.apiprontuarionline.model.Paciente;
+import com.vicente.apiprontuarionline.model.PacienteEstadoFisico;
+import com.vicente.apiprontuarionline.model.PacienteExameAnamnese;
+import com.vicente.apiprontuarionline.repositories.ContatoEmergenciaRepository;
+import com.vicente.apiprontuarionline.repositories.ContatoRepository;
+import com.vicente.apiprontuarionline.repositories.DocumentoIdentificacaoRepository;
+import com.vicente.apiprontuarionline.repositories.EnderecoRepository;
+import com.vicente.apiprontuarionline.repositories.PacienteEstadoFisicoRepository;
+import com.vicente.apiprontuarionline.repositories.PacienteExameAnamneseRepository;
+import com.vicente.apiprontuarionline.repositories.PacienteRepository;
 
 @SpringBootApplication
 public class ApiProntuarionlineApplication implements CommandLineRunner {
+
+	@Autowired
+	PacienteRepository pacienteRepository;
+	@Autowired
+	EnderecoRepository enderecoRepository;
+	@Autowired
+	ContatoRepository contatoRepository;
+	@Autowired
+	DocumentoIdentificacaoRepository documentoIdentificacaoRepository;
+	@Autowired
+	ContatoEmergenciaRepository contatoEmergenciaRepository;
+	@Autowired
+	PacienteEstadoFisicoRepository pacienteEstadoFisicoRepository;
+	@Autowired
+	PacienteExameAnamneseRepository pacienteExameAnamneseRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiProntuarionlineApplication.class, args);
 	}
 
-	@Autowired
-	PatientRepository patientRepository;
-	@Autowired
-	AddressRepository addressRepository;
-	@Autowired
-	ContactRepository contactRepository;
-	@Autowired
-	IdentificationDocumentRepository identificationDocumentRepository;
-	@Autowired
-	EmergencyContactRepository emergencyContactRepository;
-	@Autowired
-	PatientPhysicalStateRepository patientPhysicalStateRepository;
-	@Autowired
-	PatientAnamnesisRepository patientAnamnesisRepository;
-
 	@Override
 	public void run(String... args) throws Exception {
 
-		// PACIENTES
+		// PACIENTES //
 		// DATA
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		// PACIENTE 1
-		Patient pct1 = new Patient();
-		pct1.setFirstName("Antonio");
-		pct1.setFullSurname("José de Oliveira Ramos");
-		pct1.setGenre("Masculino");
-		pct1.setDateOfBirth(sdf.parse("11/01/1992"));
+		Paciente paciente1 = new Paciente();
+		paciente1.setNome("Antonio");
+		paciente1.setSobrenomeCompleto("José de Oliveira Ramos");
+		paciente1.setSexo("Masculino");
+		paciente1.setDataNascimento(sdf.parse("11/01/1992"));
 
 		// PACIENTE 2
-		Patient pct2 = new Patient();
-		pct2.setFirstName("Maria");
-		pct2.setFullSurname("Montenegro dos Santos");
-		pct2.setGenre("Feminino");
-		pct2.setDateOfBirth(sdf.parse("05/06/1985"));
+		Paciente paciente2 = new Paciente();
+		paciente2.setNome("Maria");
+		paciente2.setSobrenomeCompleto("Montenegro dos Santos");
+		paciente2.setSexo("Feminino");
+		paciente2.setDataNascimento(sdf.parse("05/06/1985"));
 
-		// ENDEREÇOS
+		// ENDEREÇOS //
 		// PACIENTE 1
-		Address add1 = new Address();
-		add1.setStreet("Rua das Cerejeiras");
-		add1.setNumber("1516");
-		add1.setComplement("Jardins das Flores");
-		add1.setNeighborhood("Jardins");
-		add1.setComplement("Prox. ao Bairro Floresta Encatanda");
-		add1.setCity("Fortaleza");
-		add1.setState("CE");
-		add1.setCountry("Brasil");
-		add1.setPostalCode("60.761-671");
+		Endereco endereco1 = new Endereco();
+		endereco1.setRua("Rua das Cerejeiras");
+		endereco1.setNumero("1516");
+		endereco1.setBairro("Jardins das Flores");
+		endereco1.setComplemento("Prox. ao Bairro Floresta Encatanda");
+		endereco1.setCidade("Fortaleza");
+		endereco1.setEstado("CE");
+		endereco1.setPais("Brasil");
+		endereco1.setCodigoPostal("60.761-671");
 
 		// PACIENTE 2
-		Address add2 = new Address();
-		add2.setStreet("Rua das Margaridas");
-		add2.setNumber("2121");
-		add2.setComplement("Jardins das Plantas");
-		add2.setNeighborhood("Floresta");
-		add2.setComplement("Prox. ao Bairro Nova Floresta");
-		add2.setCity("Maracanaú");
-		add2.setState("CE");
-		add2.setCountry("Brasil");
-		add2.setPostalCode("60.606-975");
+		Endereco endereco2 = new Endereco();
+		endereco2.setRua("Rua das Margaridas");
+		endereco2.setNumero("2121");
+		endereco2.setBairro("Jardins das Plantas");
+		endereco2.setComplemento("Prox. ao Bairro Nova Floresta");
+		endereco2.setCidade("Maracanaú");
+		endereco2.setEstado("CE");
+		endereco2.setPais("Brasil");
+		endereco2.setCodigoPostal("60.606-975");
 
-		// PACIENTE 3
-		Address add3 = new Address();
-		add3.setStreet("Rua das Palmeiras");
-		add3.setNumber("3297");
-		add3.setComplement("Floresta Trópical");
-		add3.setNeighborhood("Floresta de Greenwich");
-		add3.setComplement("Linha do equador");
-		add3.setCity("Caucaia");
-		add3.setState("CE");
-		add3.setCountry("Brasil");
-		add3.setPostalCode("60.808-789");
-
-		pct1.getAdresses().addAll(Arrays.asList(add1, add3));
-		pct2.getAdresses().addAll(Arrays.asList(add2));
-
-		add1.getPatients().addAll(Arrays.asList(pct1));
-		add2.getPatients().addAll(Arrays.asList(pct2));
-		add3.getPatients().addAll(Arrays.asList(pct1));
-
-		// BD: @ManyToMany => PACIENTE_ENDEREÇO
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-		addressRepository.saveAll(Arrays.asList(add1, add2, add3));
-
-		// CONTATOS
 		// PACIENTE 1
-		Contact cnt1 = new Contact();
-		cnt1.setPhones(Arrays.asList("(85) 3254-0910", "(85) 3255-0911"));
-		cnt1.setEmails(Arrays.asList("antonio@gmail.com", "antoniojose@yahoo.com"));
-		cnt1.setContactNumbers(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
+		Endereco endereco3 = new Endereco();
+		endereco3.setRua("Rua das Palmeiras");
+		endereco3.setNumero("3297");
+		endereco3.setBairro("Floresta Trópical");
+		endereco3.setComplemento("Linha do equador");
+		endereco3.setCidade("Caucaia");
+		endereco3.setEstado("CE");
+		endereco3.setPais("Brasil");
+		endereco3.setCodigoPostal("60.808-789");
 
-		// PACIENTE 2
-		Contact cnt2 = new Contact();
-		cnt2.setPhones(Arrays.asList("(85) 3274-2516", "(85) 3344-0907"));
-		cnt2.setEmails(Arrays.asList("maria@gmail.com", "mariamontenegro@outlook.com"));
-		cnt2.setContactNumbers(Arrays.asList("(85) 9 9900-5151", "(85) 9 9911-4748"));
+		paciente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco3));
+		paciente2.getEnderecos().addAll(Arrays.asList(endereco2));
 
-		pct1.getContacts().addAll(Arrays.asList(cnt1));
-		pct2.getContacts().addAll(Arrays.asList(cnt2));
-
-		cnt1.getPatients().addAll(Arrays.asList(pct1));
-		cnt2.getPatients().addAll(Arrays.asList(pct2));
-
-		// BD: @ManyToMany => PACIENTE_CONTATO
-		contactRepository.saveAll(Arrays.asList(cnt1, cnt2));
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-
-		// CONTATOS DE EMERGÊNCIAS
+		// CONTATOS //
 		// PACIENTE 1
-		EmergencyContact emct1 = new EmergencyContact();
-		emct1.setFirstName("Carlos");
-		emct1.setFullSurname("Manuel Bruno Souza");
-		emct1.setRg("46.360.067-8");
-		emct1.setCpf("362.127.193-73");
-		emct1.setEmail("carlosmanuelbrunosouza_@dosnu.com.br");
-		emct1.setPhone("(85) 2861-4390");
-		emct1.setContactNumber("(85) 98997-5373");
+		Contato contato1 = new Contato();
+		contato1.setEmail("antonio@gmail.com");
+		contato1.setTelefoneFixo("(85) 3254-0910");
+		contato1.setTelefoneCelular("(85) 9 9900-5151");
 
 		// PACIENTE 2
-		EmergencyContact emct2 = new EmergencyContact();
-		emct2.setFirstName("Eduardo");
-		emct2.setFullSurname("Carlos Eduardo Henry Ferreira");
-		emct2.setRg("31.951.115-7");
-		emct2.setCpf("579.232.073-05");
-		emct2.setEmail("eduardocarloseduardohenryferreira-98@fazergourmet.com.br");
-		emct2.setPhone("(85) 3893-1904");
-		emct2.setContactNumber("(85) 98899-2082(85) 98899-2082");
+		Contato contato2 = new Contato();
+		contato2.setEmail("eduardocarloseduardohenryferreira-98@fazergourmet.com.br");
+		contato2.setTelefoneFixo("(85) 3893-1904");
+		contato2.setTelefoneCelular("(85) 98899-2082");
 
-		pct1.getEmergencyContacts().addAll(Arrays.asList(emct1));
-		pct2.getEmergencyContacts().addAll(Arrays.asList(emct2));
-		emct1.getPatients().addAll(Arrays.asList(pct1));
-		emct2.getPatients().addAll(Arrays.asList(pct2));
+		// PACIENTE 1
+		Contato contato3 = new Contato();
+		contato3.setEmail("mariamontenegro@gmail.com");
+		contato3.setTelefoneFixo("(85) 2861-4390");
+		contato3.setTelefoneCelular("(85) 98997-5373");
 
-		// BD: @ManyToMany => PACIENTE_CONTATO_DE_EMERGENCIA
-		emergencyContactRepository.saveAll(Arrays.asList(emct1, emct2));
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
+		paciente1.getContatos().addAll(Arrays.asList(contato1, contato3));
+		paciente2.getContatos().addAll(Arrays.asList(contato2));
+
+		// CONTATOS DE EMERGÊNCIAS //
+		// PACIENTE 1
+		ContatoEmergencia contatoEmergencia1 = new ContatoEmergencia();
+		contatoEmergencia1.setNome("Carlos");
+		contatoEmergencia1.setSobrenomeCompleto("Manuel Bruno Souza");
+		contatoEmergencia1.setRg("46.360.067-8");
+		contatoEmergencia1.setCpf("362.127.193-73");
+		contatoEmergencia1.setEmail("carlosmanuelbrunosouza_@dosnu.com.br");
+		contatoEmergencia1.setTelefoneFixo("(85) 2861-4390");
+		contatoEmergencia1.setTelefoneCelular("(85) 98997-5373");
+
+		// PACIENTE 2
+		ContatoEmergencia contatoEmergencia2 = new ContatoEmergencia();
+		contatoEmergencia2.setNome("Eduardo");
+		contatoEmergencia2.setSobrenomeCompleto("Carlos Eduardo Henry Ferreira");
+		contatoEmergencia2.setRg("31.951.115-7");
+		contatoEmergencia2.setCpf("579.232.073-05");
+		contatoEmergencia2.setEmail("eduardocarloseduardohenryferreira-98@fazergourmet.com.br");
+		contatoEmergencia2.setTelefoneFixo("(85) 3893-1904");
+		contatoEmergencia2.setTelefoneCelular("(85) 98899-2082");
+
+		// PACIENTE 2
+		ContatoEmergencia contatoEmergencia3 = new ContatoEmergencia();
+		contatoEmergencia3.setNome("Simone ");
+		contatoEmergencia3.setSobrenomeCompleto("Jaqueline Lopes");
+		contatoEmergencia3.setRg("23.248.831-9");
+		contatoEmergencia3.setCpf("665.684.263-18");
+		contatoEmergencia3.setEmail("simonejaquelinelopes_@vetech.vet.br");
+		contatoEmergencia3.setTelefoneFixo("(85) 3604-4488");
+		contatoEmergencia3.setTelefoneCelular("(85) 99730-2303");
+
+		paciente1.getContatosEmergencia().addAll(Arrays.asList(contatoEmergencia1));
+		paciente2.getContatosEmergencia().addAll(Arrays.asList(contatoEmergencia2, contatoEmergencia3));
 
 		// DOCUMENTOS DE IDENTIFICAÇÃO
 		// PACIENTE 1
-		IdentificationDocument iddc1 = new IdentificationDocument();
-		iddc1.setRg("16.795.506-8");
-		iddc1.setCpf("818.774.980-68");
+		DocumentoIdentificacao documentoIdentificacao1 = new DocumentoIdentificacao();
+		documentoIdentificacao1.setRg("16.795.506-8");
+		documentoIdentificacao1.setCpf("818.774.980-68");
 
 		// PACIENTE 2
-		IdentificationDocument iddc2 = new IdentificationDocument();
-		iddc2.setRg("33.328.380-6");
-		iddc2.setCpf("269.670.880-09");
+		DocumentoIdentificacao documentoIdentificacao2 = new DocumentoIdentificacao();
+		documentoIdentificacao2.setRg("33.328.380-6");
+		documentoIdentificacao2.setCpf("269.670.880-09");
 
-		pct1.setIdentificationDocument(iddc1);
-		pct2.setIdentificationDocument(iddc2);
+		paciente1.setDocumentoIdentificacao(documentoIdentificacao1);
+		paciente2.setDocumentoIdentificacao(documentoIdentificacao2);
 
-		iddc1.setPatient(pct1);
-		iddc2.setPatient(pct2);
-
-		// BD: @OneToOne => PACIENTE_DOCUMENTO_DE_IDENTIFICAÇÃO
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-		identificationDocumentRepository.saveAll(Arrays.asList(iddc1, iddc2));
+		documentoIdentificacao1.setPaciente(paciente1);
+		documentoIdentificacao2.setPaciente(paciente2);
 
 		// ESTADO FISÍCO DO PACIENTE
 		// PACIENTE 1
-		PatientPhysicalState pps1 = new PatientPhysicalState();
-		pps1.setHeight(1.80);
-		pps1.setWeight(99.60);
-		pps1.setAbdominalCircumference(0.75);
-		pps1.setImc(30.60);
+		PacienteEstadoFisico pacienteEstadoFisico1 = new PacienteEstadoFisico();
+		pacienteEstadoFisico1.setPeso(1.65);
+		pacienteEstadoFisico1.setAltura(79.0);
+		pacienteEstadoFisico1.setTipoSanquineo("A+");
+		pacienteEstadoFisico1.setCircuferenciaAbdominal(0.60);
+		pacienteEstadoFisico1.setImc(29.02);
 
 		// PACIENTE 2
-		PatientPhysicalState pps2 = new PatientPhysicalState();
-		pps2.setHeight(1.65);
-		pps2.setWeight(82.0);
-		pps2.setAbdominalCircumference(0.63);
-		pps2.setImc(30.12);
+		PacienteEstadoFisico pacienteEstadoFisico2 = new PacienteEstadoFisico();
+		pacienteEstadoFisico2.setPeso(1.69);
+		pacienteEstadoFisico2.setAltura(90.0);
+		pacienteEstadoFisico2.setTipoSanquineo("B-");
+		pacienteEstadoFisico2.setCircuferenciaAbdominal(0.85);
+		pacienteEstadoFisico2.setImc(31.51);
 
-		pct1.setPatientPhysicalState(pps1);
-		pct2.setPatientPhysicalState(pps2);
+		paciente1.setPacienteEstadoFisico(pacienteEstadoFisico1);
+		paciente2.setPacienteEstadoFisico(pacienteEstadoFisico2);
+		pacienteEstadoFisico1.setPaciente(paciente1);
+		pacienteEstadoFisico2.setPaciente(paciente2);
 
-		pps1.setPatient(pct1);
-		pps2.setPatient(pct2);
-
-		// BD: @OneToOne => PACIENTE_ESTADO_FISÍCO
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-		patientPhysicalStateRepository.saveAll(Arrays.asList(pps1, pps2));
-
-		// EXAME DE ANAMNESIS DO PACIENTE
-		// PACIENTE 1
-		PatientAnamnesis pnm1 = new PatientAnamnesis();
-		pnm1.setAllergies(true);
-		pnm1.setConsumeAlcohol(false);
-		pnm1.setFollowDiet(false);
-		pnm1.setPerformsPhysicalActivity(true);
-		pnm1.setSmoker(false);
+//		// EXAME DE ANAMNESIS
+//		// PACIENTE 1
+		PacienteExameAnamnese pacienteExameAnamnese1 = new PacienteExameAnamnese();
+		pacienteExameAnamnese1.setAlergia(true);
+		pacienteExameAnamnese1.setAlcool(false);
+		pacienteExameAnamnese1.setDieta(true);
+		pacienteExameAnamnese1.setFuma(false);
+		pacienteExameAnamnese1.setAtividadeFisica(true);
 
 		// PACIENTE 2
-		PatientAnamnesis pnm2 = new PatientAnamnesis();
-		pnm2.setAllergies(false);
-		pnm2.setConsumeAlcohol(true);
-		pnm2.setFollowDiet(true);
-		pnm2.setPerformsPhysicalActivity(false);
-		pnm2.setSmoker(true);
+		PacienteExameAnamnese pacienteExameAnamnese2 = new PacienteExameAnamnese();
+		pacienteExameAnamnese2.setAlergia(false);
+		pacienteExameAnamnese2.setAlcool(true);
+		pacienteExameAnamnese2.setDieta(false);
+		pacienteExameAnamnese2.setFuma(true);
+		pacienteExameAnamnese2.setAtividadeFisica(false);
 
-		pct1.setPatientAnamnesis(pnm1);
-		pct2.setPatientAnamnesis(pnm2);
+		paciente1.setPacienteExameAnamnese(pacienteExameAnamnese1);
+		paciente2.setPacienteExameAnamnese(pacienteExameAnamnese2);
+		pacienteExameAnamnese1.setPaciente(paciente1);
+		pacienteExameAnamnese2.setPaciente(paciente2);
+//
+		pacienteRepository.saveAll(Arrays.asList(paciente1, paciente2));
+//
+		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3));
+		contatoRepository.saveAll(Arrays.asList(contato1, contato2, contato3));
+		contatoEmergenciaRepository.saveAll(Arrays.asList(contatoEmergencia1, contatoEmergencia2, contatoEmergencia3));
+		documentoIdentificacaoRepository.saveAll(Arrays.asList(documentoIdentificacao1, documentoIdentificacao2));
+		pacienteEstadoFisicoRepository.saveAll(Arrays.asList(pacienteEstadoFisico1, pacienteEstadoFisico2));
+		pacienteExameAnamneseRepository.saveAll(Arrays.asList(pacienteExameAnamnese1, pacienteExameAnamnese2));
 
-		pnm1.setPatient(pct1);
-		pnm2.setPatient(pct2);
-
-		// BD: @OneToOne => PACIENTE_ANAMNESIS
-		patientRepository.saveAll(Arrays.asList(pct1, pct2));
-		patientAnamnesisRepository.saveAll(Arrays.asList(pnm1, pnm2));
 	}
 
 }
