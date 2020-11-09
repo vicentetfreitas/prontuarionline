@@ -9,11 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.vicente.apiprontuarionline.model.Contato;
 import com.vicente.apiprontuarionline.model.ContatoEmergencia;
+import com.vicente.apiprontuarionline.model.DocumentoIdentificacao;
 import com.vicente.apiprontuarionline.model.Endereco;
 import com.vicente.apiprontuarionline.model.Paciente;
+import com.vicente.apiprontuarionline.model.PacienteEstadoFisico;
+import com.vicente.apiprontuarionline.model.PacienteExameAnamnese;
 import com.vicente.apiprontuarionline.repositories.ContatoEmergenciaRepository;
 import com.vicente.apiprontuarionline.repositories.ContatoRepository;
+import com.vicente.apiprontuarionline.repositories.DocumentoIdentificacaoRepository;
 import com.vicente.apiprontuarionline.repositories.EnderecoRepository;
+import com.vicente.apiprontuarionline.repositories.PacienteEstadoFisicoRepository;
+import com.vicente.apiprontuarionline.repositories.PacienteExameAnamneseRepository;
 import com.vicente.apiprontuarionline.repositories.PacienteRepository;
 
 @Service
@@ -27,8 +33,12 @@ public class DBService {
 	ContatoRepository contatoRepository;
 	@Autowired
 	ContatoEmergenciaRepository contatoEmergenciaRepository;
-	// @Autowired
-	// DocumentoIdentificacaoRepository documentoIdentificacaoRepository;
+	@Autowired
+	DocumentoIdentificacaoRepository documentoIdentificacaoRepository;
+	@Autowired
+	PacienteEstadoFisicoRepository pacienteEstadoFisicoRepository;
+	@Autowired
+	PacienteExameAnamneseRepository pacienteExameAnamneseRepository;
 
 	public void instatiateTestDatabase() throws ParseException {
 
@@ -142,75 +152,74 @@ public class DBService {
 		paciente1.getContatosEmergencias().addAll(Arrays.asList(contatoEmergencia1));
 		paciente2.getContatosEmergencias().addAll(Arrays.asList(contatoEmergencia2, contatoEmergencia3));
 
-		// DOCUMENTOS DE IDENTIFICAÇÃO
-		// PACIENTE 1
-//		DocumentoIdentificacao documentoIdentificacao1 = new DocumentoIdentificacao();
-//		documentoIdentificacao1.setRg("16.795.506-8");
-//		documentoIdentificacao1.setCpf("818.774.980-68");
-//
-//		// PACIENTE 2
-//		DocumentoIdentificacao documentoIdentificacao2 = new DocumentoIdentificacao();
-//		documentoIdentificacao2.setRg("33.328.380-6");
-//		documentoIdentificacao2.setCpf("269.670.880-09");
-//
-//		paciente1.setDocumentoIdentificacao(documentoIdentificacao1);
-//		paciente2.setDocumentoIdentificacao(documentoIdentificacao2);
-//
-//		documentoIdentificacao1.setPaciente(paciente1);
-//		documentoIdentificacao2.setPaciente(paciente2);
+//		// DOCUMENTOS DE IDENTIFICAÇÃO
+//		// PACIENTE 1
+		DocumentoIdentificacao documentoIdentificacao1 = new DocumentoIdentificacao();
+		documentoIdentificacao1.setRg("16.795.506-8");
+		documentoIdentificacao1.setCpf("818.774.980-68");
+
+		// PACIENTE 2
+		DocumentoIdentificacao documentoIdentificacao2 = new DocumentoIdentificacao();
+		documentoIdentificacao2.setRg("33.328.380-6");
+		documentoIdentificacao2.setCpf("269.670.880-09");
+
+		paciente1.setDocumentoIdentificacao(documentoIdentificacao1);
+		paciente2.setDocumentoIdentificacao(documentoIdentificacao2);
+
+		documentoIdentificacao1.setPaciente(paciente1);
+		documentoIdentificacao2.setPaciente(paciente2);
 
 //		// ESTADO FISÍCO DO PACIENTE
 //		// PACIENTE 1
-//		PacienteEstadoFisico pacienteEstadoFisico1 = new PacienteEstadoFisico();
-//		pacienteEstadoFisico1.setPeso(1.65);
-//		pacienteEstadoFisico1.setAltura(79.0);
-//		pacienteEstadoFisico1.setTipoSanquineo("A+");
-//		pacienteEstadoFisico1.setCircuferenciaAbdominal(0.60);
-//		pacienteEstadoFisico1.setImc(29.02);
-//
-//		// PACIENTE 2
-//		PacienteEstadoFisico pacienteEstadoFisico2 = new PacienteEstadoFisico();
-//		pacienteEstadoFisico2.setPeso(1.69);
-//		pacienteEstadoFisico2.setAltura(90.0);
-//		pacienteEstadoFisico2.setTipoSanquineo("B-");
-//		pacienteEstadoFisico2.setCircuferenciaAbdominal(0.85);
-//		pacienteEstadoFisico2.setImc(31.51);
-//
-//		paciente1.setPacienteEstadoFisico(pacienteEstadoFisico1);
-//		paciente2.setPacienteEstadoFisico(pacienteEstadoFisico2);
-//		pacienteEstadoFisico1.setPaciente(paciente1);
-//		pacienteEstadoFisico2.setPaciente(paciente2);
-//
-//		// EXAME DE ANAMNESIS
-//		// PACIENTE 1
-//		PacienteExameAnamnese pacienteExameAnamnese1 = new PacienteExameAnamnese();
-//		pacienteExameAnamnese1.setAlergia(true);
-//		pacienteExameAnamnese1.setAlcool(false);
-//		pacienteExameAnamnese1.setDieta(true);
-//		pacienteExameAnamnese1.setFuma(false);
-//		pacienteExameAnamnese1.setAtividadeFisica(true);
-//
-//		// PACIENTE 2
-//		PacienteExameAnamnese pacienteExameAnamnese2 = new PacienteExameAnamnese();
-//		pacienteExameAnamnese2.setAlergia(false);
-//		pacienteExameAnamnese2.setAlcool(true);
-//		pacienteExameAnamnese2.setDieta(false);
-//		pacienteExameAnamnese2.setFuma(true);
-//		pacienteExameAnamnese2.setAtividadeFisica(false);
-//
-//		paciente1.setPacienteExameAnamnese(pacienteExameAnamnese1);
-//		paciente2.setPacienteExameAnamnese(pacienteExameAnamnese2);
-//		pacienteExameAnamnese1.setPaciente(paciente1);
-//		pacienteExameAnamnese2.setPaciente(paciente2);
-////
+		PacienteEstadoFisico pacienteEstadoFisico1 = new PacienteEstadoFisico();
+		pacienteEstadoFisico1.setPeso(1.65);
+		pacienteEstadoFisico1.setAltura(79.0);
+		pacienteEstadoFisico1.setTipoSanquineo("A+");
+		pacienteEstadoFisico1.setCircuferenciaAbdominal(0.60);
+		pacienteEstadoFisico1.setImc(29.02);
+
+		// PACIENTE 2
+		PacienteEstadoFisico pacienteEstadoFisico2 = new PacienteEstadoFisico();
+		pacienteEstadoFisico2.setPeso(1.69);
+		pacienteEstadoFisico2.setAltura(90.0);
+		pacienteEstadoFisico2.setTipoSanquineo("B-");
+		pacienteEstadoFisico2.setCircuferenciaAbdominal(0.85);
+		pacienteEstadoFisico2.setImc(31.51);
+
+		paciente1.setPacienteEstadoFisico(pacienteEstadoFisico1);
+		paciente2.setPacienteEstadoFisico(pacienteEstadoFisico2);
+		pacienteEstadoFisico1.setPaciente(paciente1);
+		pacienteEstadoFisico2.setPaciente(paciente2);
+
+		// EXAME DE ANAMNESIS
+		// PACIENTE 1
+		PacienteExameAnamnese pacienteExameAnamnese1 = new PacienteExameAnamnese();
+		pacienteExameAnamnese1.setAlergia(true);
+		pacienteExameAnamnese1.setAlcool(false);
+		pacienteExameAnamnese1.setDieta(true);
+		pacienteExameAnamnese1.setFuma(false);
+		pacienteExameAnamnese1.setAtividadeFisica(true);
+
+		// PACIENTE 2
+		PacienteExameAnamnese pacienteExameAnamnese2 = new PacienteExameAnamnese();
+		pacienteExameAnamnese2.setAlergia(false);
+		pacienteExameAnamnese2.setAlcool(true);
+		pacienteExameAnamnese2.setDieta(false);
+		pacienteExameAnamnese2.setFuma(true);
+		pacienteExameAnamnese2.setAtividadeFisica(false);
+
+		paciente1.setPacienteExameAnamnese(pacienteExameAnamnese1);
+		paciente2.setPacienteExameAnamnese(pacienteExameAnamnese2);
+		pacienteExameAnamnese1.setPaciente(paciente1);
+		pacienteExameAnamnese2.setPaciente(paciente2);
 
 		pacienteRepository.saveAll(Arrays.asList(paciente1, paciente2));
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3));
 		contatoRepository.saveAll(Arrays.asList(contato1, contato2, contato3));
 		contatoEmergenciaRepository.saveAll(Arrays.asList(contatoEmergencia1, contatoEmergencia2, contatoEmergencia3));
-//		documentoIdentificacaoRepository.saveAll(Arrays.asList(documentoIdentificacao1, documentoIdentificacao2));
-//		pacienteEstadoFisicoRepository.saveAll(Arrays.asList(pacienteEstadoFisico1, pacienteEstadoFisico2));
-//		pacienteExameAnamneseRepository.saveAll(Arrays.asList(pacienteExameAnamnese1, pacienteExameAnamnese2));
+		documentoIdentificacaoRepository.saveAll(Arrays.asList(documentoIdentificacao1, documentoIdentificacao2));
+		pacienteEstadoFisicoRepository.saveAll(Arrays.asList(pacienteEstadoFisico1, pacienteEstadoFisico2));
+		pacienteExameAnamneseRepository.saveAll(Arrays.asList(pacienteExameAnamnese1, pacienteExameAnamnese2));
 
 	}
 }
