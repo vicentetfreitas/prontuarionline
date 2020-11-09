@@ -14,7 +14,7 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
-	// BUSCAR PACIENTE POR {id}
+	// BUSCAR PACIENTE NO BD
 	public Paciente findPaciente(Long id) {
 		Optional<Paciente> objPaciente = pacienteRepository.findById(id);
 		return objPaciente.orElseThrow(() -> new ObjectNotFoundException(
@@ -27,9 +27,15 @@ public class PacienteService {
 		return pacienteRepository.save(objPaciente);
 	}
 
+	// ATUALIZAR PACIENTE NO BANCO DE DADOS
 	public Paciente updatePaciente(Paciente objPaciente) {
 		findPaciente(objPaciente.getId());
 		return pacienteRepository.save(objPaciente);
 	}
 
+	// DELETE PACIENTE NO BANCO DE DADOS
+	public void deletePaciente(Long id) {
+		findPaciente(id);
+		pacienteRepository.deleteById(id);
+	}
 }

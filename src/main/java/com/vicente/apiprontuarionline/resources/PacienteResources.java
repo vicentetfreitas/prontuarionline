@@ -21,14 +21,14 @@ public class PacienteResources {
 	@Autowired
 	private PacienteService pacienteService;
 
-	// LISTA PACIENTE POR Id {GET}
+	// FIND PACIENTE
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Paciente> findPaciente(@PathVariable Long id) {
 		Paciente objPaciente = pacienteService.findPaciente(id);
 		return ResponseEntity.ok().body(objPaciente);
 	}
 
-	// INSERIR PACIENTE NO BANCO DE DADOS {POST}
+	// INSERT PACIENTE
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insertPaciente(@RequestBody Paciente objPaciente) {
 		objPaciente = pacienteService.insertPaciente(objPaciente);
@@ -36,15 +36,20 @@ public class PacienteResources {
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	// ALETERAR DADOS DO PACIENTE NO BANCO DE DADOS {PUT}
-
+	// UPDATE PACIENTE
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updatePaciente(@RequestBody Paciente objPaciente, @PathVariable Long id) {
 		objPaciente.setId(id);
-
 		objPaciente = pacienteService.updatePaciente(objPaciente);
 		return ResponseEntity.noContent().build();
-
+	}
+	
+	// DELETE PACIENTE
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletePaciente(@PathVariable Long id){
+		pacienteService.deletePaciente(id);
+		return ResponseEntity.noContent().build();
+		
 	}
 
 }
