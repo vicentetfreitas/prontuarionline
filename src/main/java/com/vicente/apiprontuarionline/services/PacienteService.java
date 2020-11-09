@@ -1,5 +1,6 @@
 package com.vicente.apiprontuarionline.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
-	// BUSCAR PACIENTE NO BD
+	// BUSCAR PACIENTE NO BD POR ID
 	public Paciente findPaciente(Long id) {
 		Optional<Paciente> objPaciente = pacienteRepository.findById(id);
 		return objPaciente.orElseThrow(() -> new ObjectNotFoundException(
@@ -37,5 +38,11 @@ public class PacienteService {
 	public void deletePaciente(Long id) {
 		findPaciente(id);
 		pacienteRepository.deleteById(id);
+	}
+
+	// LISTANDO PACIENTE NO BANCO DE DADOS
+
+	public List<Paciente> findAllPaciente() {
+		return pacienteRepository.findAll();
 	}
 }

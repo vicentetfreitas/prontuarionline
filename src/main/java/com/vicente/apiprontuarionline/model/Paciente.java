@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_paciente")
 @Getter
 @Setter
 public class Paciente implements Serializable {
