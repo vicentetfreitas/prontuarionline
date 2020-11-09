@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_contact")
+@Table(name = "tb_contato")
 @Getter
 @Setter
 public class Contato implements Serializable {
@@ -26,12 +27,13 @@ public class Contato implements Serializable {
 	// ATRIBUTOS BÁSICOS
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
-
 	private String email;
 	private String telefoneFixo;
 	private String telefoneCelular;
 
+	// ASSOCIAÇÕES E RELACIONAMENTOS
 	@JsonIgnore
 	@ManyToMany(mappedBy = "contatos")
 	private List<Paciente> pacientes = new ArrayList<>();

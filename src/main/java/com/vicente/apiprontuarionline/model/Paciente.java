@@ -14,9 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,32 +38,33 @@ public class Paciente implements Serializable {
 	private String nome;
 	private String sobrenomeCompleto;
 	private String sexo;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
 	// ASSOCIAÇÕES E RELACIONAMENTOS
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_pacientes_enderecos", joinColumns = @JoinColumn(name = "paciente_id"), inverseJoinColumns = @JoinColumn(name = "endereco_id"))
+	@JoinTable(name = "pacientes_enderecos", joinColumns = @JoinColumn(name = "id_paciente"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_paciente_contato", joinColumns = @JoinColumn(name = "paciente_id"), inverseJoinColumns = @JoinColumn(name = "contato_id"))
+	@JoinTable(name = "tb_pacientes_contatos", joinColumns = @JoinColumn(name = "paciente_id"), inverseJoinColumns = @JoinColumn(name = "contato_id"))
 	private List<Contato> contatos = new ArrayList<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_contato_emergencia", joinColumns = @JoinColumn(name = "paciente_id"), inverseJoinColumns = @JoinColumn(name = "contato_emergencia_id"))
-	private List<ContatoEmergencia> contatosEmergencia = new ArrayList<>();
+	@JoinTable(name = "tb_pacientes_contatos_emergencias", joinColumns = @JoinColumn(name = "paciente_id"), inverseJoinColumns = @JoinColumn(name = "contato_emergencia_id"))
+	private List<ContatoEmergencia> contatosEmergencias = new ArrayList<>();
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
-	@PrimaryKeyJoinColumn
-	private DocumentoIdentificacao documentoIdentificacao;
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
+//	@PrimaryKeyJoinColumn
+//	private DocumentoIdentificacao documentoIdentificacao;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
-	@PrimaryKeyJoinColumn
-	private PacienteEstadoFisico pacienteEstadoFisico;
-
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
-	@PrimaryKeyJoinColumn
-	private PacienteExameAnamnese pacienteExameAnamnese;
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
+//	@PrimaryKeyJoinColumn
+//	private PacienteEstadoFisico pacienteEstadoFisico;
+//
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
+//	@PrimaryKeyJoinColumn
+//	private PacienteExameAnamnese pacienteExameAnamnese;
 
 	// CONSTRUTORES
 	public Paciente() {

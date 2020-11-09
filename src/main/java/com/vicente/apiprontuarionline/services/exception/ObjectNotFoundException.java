@@ -1,4 +1,4 @@
-package com.vicente.apiprontuarionline.services.exceptions;
+package com.vicente.apiprontuarionline.services.exception;
 
 /*Exceção personalisada*/
 public class ObjectNotFoundException extends RuntimeException {

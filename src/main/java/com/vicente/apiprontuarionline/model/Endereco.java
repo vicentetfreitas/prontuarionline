@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Endereco implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
 	private String pais;
 	private String estado;
@@ -34,15 +36,18 @@ public class Endereco implements Serializable {
 	private String bairro;
 	private String complemento;
 	private String codigoPostal;
+
 	// ASSOCIAÇÕES E RELACIONAMENTOS
 	@JsonIgnore
 	@ManyToMany(mappedBy = "enderecos")
 	private List<Paciente> pacientes = new ArrayList<>();
 
 	// CONSTRUTORES
-	
+	public Endereco() {
+	}
+
 	public Endereco(Long id, String pais, String estado, String cidade, String rua, String numero, String bairro,
-			String complemento, String codigoPostal, List<Paciente> pacientes) {
+			String complemento, String codigoPostal) {
 		super();
 		this.id = id;
 		this.pais = pais;
@@ -53,12 +58,8 @@ public class Endereco implements Serializable {
 		this.bairro = bairro;
 		this.complemento = complemento;
 		this.codigoPostal = codigoPostal;
-		this.pacientes = pacientes;
-	}	
-	public Endereco() {
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
