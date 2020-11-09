@@ -15,15 +15,20 @@ public class PacienteService {
 	private PacienteRepository pacienteRepository;
 
 	// BUSCAR PACIENTE POR {id}
-	public Paciente buscarPacienteId(Long id) {
+	public Paciente findPaciente(Long id) {
 		Optional<Paciente> objPaciente = pacienteRepository.findById(id);
 		return objPaciente.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Paciente.class.getName()));
 	}
 
 	// INSERIR PACIENTE NO BANCO DE DADOS
-	public Paciente inserirPaciente(Paciente objPaciente) {
+	public Paciente insertPaciente(Paciente objPaciente) {
 		objPaciente.setId(null);
+		return pacienteRepository.save(objPaciente);
+	}
+
+	public Paciente updatePaciente(Paciente objPaciente) {
+		findPaciente(objPaciente.getId());
 		return pacienteRepository.save(objPaciente);
 	}
 

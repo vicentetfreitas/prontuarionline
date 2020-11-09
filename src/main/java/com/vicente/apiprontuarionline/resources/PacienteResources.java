@@ -23,18 +23,28 @@ public class PacienteResources {
 
 	// LISTA PACIENTE POR Id {GET}
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> listPatients(@PathVariable Long id) {
-		Paciente objPatient = pacienteService.buscarPacienteId(id);
-		return ResponseEntity.ok().body(objPatient);
+	public ResponseEntity<Paciente> findPaciente(@PathVariable Long id) {
+		Paciente objPaciente = pacienteService.findPaciente(id);
+		return ResponseEntity.ok().body(objPaciente);
 	}
 
 	// INSERIR PACIENTE NO BANCO DE DADOS {POST}
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> inserirPaciente(@RequestBody Paciente objPaciente) {
-		objPaciente = pacienteService.inserirPaciente(objPaciente);
+	public ResponseEntity<Void> insertPaciente(@RequestBody Paciente objPaciente) {
+		objPaciente = pacienteService.insertPaciente(objPaciente);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objPaciente.getId())
 				.toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	// ALETERAR DADOS DO PACIENTE NO BANCO DE DADOS {PUT}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updatePaciente(@RequestBody Paciente objPaciente, @PathVariable Long id) {
+		objPaciente.setId(id);
+
+		objPaciente = pacienteService.updatePaciente(objPaciente);
+		return ResponseEntity.noContent().build();
+
 	}
 
 }
